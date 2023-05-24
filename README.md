@@ -8,6 +8,7 @@
 
 ### Test environment
 
+```shell
 .NET SDK:
  Version:   7.0.203
  Commit:    5b005c19f5
@@ -22,6 +23,7 @@ Host:
   Version:      7.0.5
   Architecture: x64
   Commit:       8042d61b17
+```
 
 ### Steps
 
