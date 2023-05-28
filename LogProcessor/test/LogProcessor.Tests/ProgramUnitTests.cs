@@ -8,29 +8,32 @@ namespace LogProcessor.Tests;
 public class ProgramUnitTests
 {
     [Fact]
-    public void Test_EmptyArgumentsString()
+    public void EmptyArgumentsString()
     {
-	var expected = 1;
+        var expected = 1;
 
-	var actual = Program.Main(new string[0]);
+        var actual = Program.Main(Array.Empty<string>());
 
-	Assert.Equal(expected, actual);
+        Assert.Equal(expected, actual);
     }
 
     [Fact]
-    public void Test_GoodArgumentsString()
+    public void GoodArgumentsString()
     {
-	var expected = 0;
+        var expected = 0;
+        var actual = -1;
 
-	var actual = Program.Main
-	    (
-		new string[]
-		{
-		    "--files", "one.txt", "two.txt",
-		    "--type", "W3C"
-		}
-	    );
+        using (File.Create("test.txt"))
+        {
+            actual = Program.Main(new string[]
+            {
+            "--files", "test.txt",
+            "--type", "W3C"
+            });
+        }
 
-	Assert.Equal(expected, actual);
+        File.Delete("test.txt");
+
+        Assert.Equal(expected, actual);
     }
 }
