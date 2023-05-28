@@ -10,7 +10,27 @@ public class FormatInfoUnitTests : TestWithStandardOutput
 #Date: 2002-05-02 17:42:15  // when the first log file entry was recorded, which is when the entire log file was created.
 #Fields: date time c-ip cs-username s-ip s-port cs-method cs-uri-stem cs-uri-query sc-status cs(User-Agent)
 2002-05-02 17:42:15 172.22.255.255 - 172.30.255.255 80 GET /images/picture.jpg - 200 Mozilla/4.0+(compatible;MSIE+5.5;+Windows+2000+Server)
-#Remarks: comment stirng
+#Remarks: comment string
+2002-05-02 17:42:16 172.22.255.255 - 172.30.255.255 80 GET /images/picture.jpg - 200 Mozilla/4.0+(compatible;MSIE+5.5;+Windows+2000+Server)
+
+2002-05-02 17:42:17 172.22.255.255 - 172.30.255.255 80 GET /images/picture.jpg - 200 Mozilla/4.0+(compatible;MSIE+5.5;+Windows+2000+Server)
+""";
+
+    private static readonly string contentW3CBadFields = """
+#Software: Microsoft HTTP Server API 2.0
+#Version: 1.0   // the log file version as it's described by "https://www.w3.org/TR/WD-logfile".
+#Date: 2002-05-02 17:42:15  // when the first log file entry was recorded, which is when the entire log file was created.
+--BAD-FIELDS_DEFINITION--: date time c-ip cs-username s-ip s-port cs-method cs-uri-stem cs-uri-query sc-status cs(User-Agent)
+2002-05-02 17:42:15 172.22.255.255 - 172.30.255.255 80 GET /images/picture.jpg - 200 Mozilla/4.0+(compatible;MSIE+5.5;+Windows+2000+Server)
+""";    
+    
+    private static readonly string contentW3CBadFieldsEmpty = """
+#Software: Microsoft HTTP Server API 2.0
+#Version: 1.0   // the log file version as it's described by "https://www.w3.org/TR/WD-logfile".
+#Date: 2002-05-02 17:42:15  // when the first log file entry was recorded, which is when the entire log file was created.
+#Fields:
+2002-05-02 17:42:15 172.22.255.255 - 172.30.255.255 80 GET /images/picture.jpg - 200 Mozilla/4.0+(compatible;MSIE+5.5;+Windows+2000+Server)
+#Remarks: comment string
 2002-05-02 17:42:16 172.22.255.255 - 172.30.255.255 80 GET /images/picture.jpg - 200 Mozilla/4.0+(compatible;MSIE+5.5;+Windows+2000+Server)
 
 2002-05-02 17:42:17 172.22.255.255 - 172.30.255.255 80 GET /images/picture.jpg - 200 Mozilla/4.0+(compatible;MSIE+5.5;+Windows+2000+Server)
@@ -45,6 +65,39 @@ public class FormatInfoUnitTests : TestWithStandardOutput
         Assert.Equal(expectedTimeValue, queryForEntries.First()[3]);
     }
 
+    [Fact]
+    public void W3CColumnNamesParsingForBadFieldSpecifier()
+    {
+        // arrange
+        var tempFileName = CreateW3CLogFile(contentW3CBadFields);
+
+        // act
+        void getFormatInfo() => FormatProvider.GetW3CFormatInfo(tempFileName);
+
+        //assert
+        Exception exception = Assert.Throws<Exception>(getFormatInfo);
+        Assert.Equal($"[FormatProvider::GetW3CFormatInfo][ERROR]: #Fields: specifier is missing or malformed in [{tempFileName}]!", exception.Message);
+
+        // clean
+        File.Delete(tempFileName);
+    }
+
+    [Fact]
+    public void W3CColumnNamesParsingForBadFieldEmpty()
+    {
+        // arrange
+        var tempFileName = CreateW3CLogFile(contentW3CBadFieldsEmpty);
+
+        // act
+        void getFormatInfo() => FormatProvider.GetW3CFormatInfo(tempFileName);
+
+        //assert
+        Exception exception = Assert.Throws<Exception>(getFormatInfo);
+        Assert.Equal($"[FormatProvider::GetW3CFormatInfo][ERROR]: #Fields: specifier defines no fields in [{tempFileName}]!", exception.Message); 
+
+        // clean
+        File.Delete(tempFileName);
+    }
 
     [Fact]
     public void W3CColumnNamesParsing()
