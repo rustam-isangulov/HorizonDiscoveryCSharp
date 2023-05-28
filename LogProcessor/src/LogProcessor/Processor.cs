@@ -21,20 +21,20 @@ namespace LogProcessor
             Load(Transform(Extract(files)));
         }
 
-        private void Load(IList<IList<string>> processedEntries)
+        private void Load(LogEntries processedEntries)
         {
-            foreach (var entry in processedEntries) 
+            foreach (var entry in processedEntries.Entries) 
             {
                 _appender(String.Join(" ", entry.ToArray()));
             }
         }
 
-        private IList<IList<string>> Transform(IList<IList<string>> sourceEntries) 
+        private LogEntries Transform(LogEntries sourceEntries) 
         {
             return sourceEntries;
         }
 
-        private IList<IList<string>> Extract(IList<FileInfo> files)
+        private LogEntries Extract(IList<FileInfo> files)
         {
             var lineQuery =
                 from file in files
@@ -47,7 +47,9 @@ namespace LogProcessor
             var entriesWithData = lineQuery.ToList();
             entriesWithData.RemoveAll( e => e.Count != expectedNumberOfValuesPerEntry );
 
-            return entriesWithData;
+            return LogEntries.Of(
+                LogFields.Of(_formatInfo.Fields), 
+                entriesWithData);
         }
 
         public class Builder
