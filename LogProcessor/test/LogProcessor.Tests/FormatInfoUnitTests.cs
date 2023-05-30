@@ -75,8 +75,8 @@ public class FormatInfoUnitTests : TestWithStandardOutput
         void getFormatInfo() => FormatProvider.GetW3CFormatInfo(tempFileName);
 
         //assert
-        Exception exception = Assert.Throws<Exception>(getFormatInfo);
-        Assert.Equal($"[FormatProvider::GetW3CFormatInfo][ERROR]: #Fields: specifier is missing or malformed in [{tempFileName}]!", exception.Message);
+        ArgumentException exception = Assert.Throws<ArgumentException>(getFormatInfo);
+        Assert.Equal($"[FormatProvider::GetW3CFormatInfo]: #Fields: specifier is missing or malformed in [{tempFileName}]!", exception.Message);
 
         // clean
         File.Delete(tempFileName);
@@ -92,8 +92,8 @@ public class FormatInfoUnitTests : TestWithStandardOutput
         void getFormatInfo() => FormatProvider.GetW3CFormatInfo(tempFileName);
 
         //assert
-        Exception exception = Assert.Throws<Exception>(getFormatInfo);
-        Assert.Equal($"[FormatProvider::GetW3CFormatInfo][ERROR]: #Fields: specifier defines no fields in [{tempFileName}]!", exception.Message); 
+        ArgumentException exception = Assert.Throws<ArgumentException>(getFormatInfo);
+        Assert.Equal($"[FormatProvider::GetW3CFormatInfo]: #Fields: specifier defines no fields in [{tempFileName}]!", exception.Message); 
 
         // clean
         File.Delete(tempFileName);

@@ -5,8 +5,12 @@ using LogProcessor;
 
 namespace LogProcessor.Tests;
 
-public class ProgramUnitTests
+public class ProgramUnitTests : TestWithStandardOutput
 {
+    public ProgramUnitTests(ITestOutputHelper output) : base(output)
+    {
+    }
+
     [Fact]
     public void EmptyArgumentsString()
     {
@@ -20,20 +24,18 @@ public class ProgramUnitTests
     [Fact]
     public void GoodArgumentsString()
     {
-        var expected = 0;
-        var actual = -1;
+        File.Create("test.txt").Close();
 
-        using (File.Create("test.txt"))
+        var expected = 0;
+
+        var actual = Program.Main(new string[]
         {
-            actual = Program.Main(new string[]
-            {
             "--files", "test.txt",
             "--type", "W3C"
-            });
-        }
-
-        File.Delete("test.txt");
+        });
 
         Assert.Equal(expected, actual);
+        
+        File.Delete("test.txt");
     }
 }

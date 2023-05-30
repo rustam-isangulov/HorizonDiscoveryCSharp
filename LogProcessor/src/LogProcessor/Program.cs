@@ -51,11 +51,30 @@ public class Program
 
     internal static void RunProcessor(IList<FileInfo> files, SupportedFormats type)
     {
-        Console.WriteLine("files to process:");
-        foreach (var file in files)
+        try
         {
-            Console.WriteLine($"\t: {file}");
+            Console.WriteLine("files to process:");
+            foreach (var file in files)
+            {
+                Console.WriteLine($"\t {file}");
+            }
+            Console.WriteLine($"log type: {type}");
+
+            var processor = type switch
+            {
+                SupportedFormats.W3C => Processors.GetW3CProcessor(files, Console.WriteLine),
+                SupportedFormats.NCSA => Processors.GetNCSAProcessor(Console.WriteLine),
+                _ => throw new NotImplementedException()
+            };
+
+            Console.WriteLine("Processed logs output:");
+            processor.Process(files);
+
         }
-        Console.WriteLine($"log type: {type}");
+        catch (Exception ex)
+        {
+            Console.WriteLine("Unable to process, reason: ");
+            Console.WriteLine($"\t {ex.Message}");
+        }
     }
 }

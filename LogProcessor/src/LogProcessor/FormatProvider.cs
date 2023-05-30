@@ -22,14 +22,14 @@ public class FormatProvider
 
         if (!queryFields.Any())
         {
-            throw new Exception($"[FormatProvider::GetW3CFormatInfo][ERROR]: {_w3cFieldsSpecifier} specifier is missing or malformed in [{fileName}]!");
+            throw new ArgumentException($"[FormatProvider::GetW3CFormatInfo]: {_w3cFieldsSpecifier} specifier is missing or malformed in [{fileName}]!");
         }
 
         var fields = queryFields.First().ToList();
 
         if (fields.Count == 0)
         {
-            throw new Exception($"[FormatProvider::GetW3CFormatInfo][ERROR]: {_w3cFieldsSpecifier} specifier defines no fields in [{fileName}]!");
+            throw new ArgumentException($"[FormatProvider::GetW3CFormatInfo]: {_w3cFieldsSpecifier} specifier defines no fields in [{fileName}]!");
         }
 
         return new FormatInfo(
