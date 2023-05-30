@@ -22,5 +22,17 @@ public class LogFieldsUnitTests : TestWithStandardOutput
         Assert.Equal(1, fields["one"]);
         Assert.Equal(2, fields["two"]);
         Assert.Equal(new List<string> { "zero", "one", "two" }, fields.Fields);
+
+    }
+    [Fact]
+    public void CreatingFieldsWithNonDistinctNames()
+    {
+        // act
+        static void createLogFields() =>
+            LogFields.Of(new List<string> { "REPEAT", "REPEAT", "two" });
+
+        // assert
+        ArgumentException exception = Assert.Throws<ArgumentException>(createLogFields);
+        Assert.Equal("[LogFields::Of][ERROR] List of field names has non-unique elements!", exception.Message);
     }
 }

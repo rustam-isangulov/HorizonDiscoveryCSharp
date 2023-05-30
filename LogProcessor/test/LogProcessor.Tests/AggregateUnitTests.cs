@@ -33,7 +33,7 @@ public class AggregateUnitTests : TestWithStandardOutput
         // act
         var aggregatedEntries = Aggregator.Builder
             .Aggregator()
-            .WithClassifier("zero", "zero_as_classifier")
+            .WithClassifier("zero", "zero_classifier")
             .WithCounter("zero_classifier_counter")
             .WithFieldAggregator("one", "one_concat", (prev, curr) => prev + "+" + curr)
             .Build()
@@ -44,4 +44,21 @@ public class AggregateUnitTests : TestWithStandardOutput
         Assert.Equal(3, int.Parse
             (aggregatedEntries.Entries[0][aggregatedEntries.Fields["zero_classifier_counter"]]));
     }
+
+    [Fact]
+    public void BasicAggregateWithNonUniqueDestinationFields()
+    {
+        // act
+        void buildAggregator() => Aggregator.Builder
+            .Aggregator()
+            .WithClassifier("zero", "zero_classifier_counter")
+            .WithCounter("zero_classifier_counter")
+            .WithFieldAggregator("one", "one_concat", (prev, curr) => prev + "+" + curr)
+            .Build();
+
+        // assert
+        ArgumentException exception = Assert.Throws<ArgumentException>(buildAggregator);
+        Assert.Equal("[Aggregator::Builder::Build] List of destination field names has non-unique elements!", exception.Message);
+    }
+
 }

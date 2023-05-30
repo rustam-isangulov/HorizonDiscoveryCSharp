@@ -37,7 +37,7 @@ public class Aggregator : ITransform
                 Aggregate = AggregateGroup(g.ToList(), source.Fields)
             };
 
-        var aggragatedList = new List<IList<string>>();
+        var aggregatedList = new List<IList<string>>();
 
         foreach (var e in query)
         {
@@ -49,17 +49,17 @@ public class Aggregator : ITransform
                 newEntry.Add(e.Aggregate[source.Fields[agg.SourceFieldName]]);
             }
 
-            aggragatedList.Add(newEntry);
+            aggregatedList.Add(newEntry);
         }
 
-        var aggregatedLogFields = LogFields.Of(_aggregators
+        var aggregatedLogFields = LogFields.Of(
+            _aggregators
             .Select(a => a.DestinationFieldName)
             .Prepend(_classifierDestinationFieldName)
             .Prepend(_counterDestinationFieldName)
             .ToList());
 
-
-        return LogEntries.Of(aggregatedLogFields, aggragatedList);
+        return LogEntries.Of(aggregatedLogFields, aggregatedList);
     }
 
     private IList<string> AggregateGroup(IList<IList<string>> g, LogFields logFields)
@@ -131,7 +131,14 @@ public class Aggregator : ITransform
                 throw new InvalidOperationException("[Aggregator::Builder::Build] the counter field name is empty!");
             }
 
-            // TODO: ADD VALIDATION FOR BOTH SOURCE AND DEST FIELD NAMES
+            var diffChecker  = new HashSet<string>();
+            if ( !(diffChecker.Add(_counterDestinationFieldName) && 
+                diffChecker.Add(_classifierDestinationFieldName) &&
+                _aggregators.All(agg => diffChecker.Add(agg.DestinationFieldName))) )
+            {
+                throw new ArgumentException
+                    ("[Aggregator::Builder::Build] List of destination field names has non-unique elements!");
+            }
 
             return new Aggregator(
                 _aggregators, 
