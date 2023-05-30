@@ -29,7 +29,6 @@ public class AggregateUnitTests : TestWithStandardOutput
                 new List<string> { "502", "e", "f" }
             });
 
-
         // act
         var aggregatedEntries = Aggregator.Builder
             .Aggregator()
@@ -60,5 +59,4 @@ public class AggregateUnitTests : TestWithStandardOutput
         ArgumentException exception = Assert.Throws<ArgumentException>(buildAggregator);
         Assert.Equal("[Aggregator::Builder::Build] List of destination field names has non-unique elements!", exception.Message);
     }
-
 }

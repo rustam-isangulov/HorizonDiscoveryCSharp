@@ -65,7 +65,7 @@ public class FilterUnitTests : TestWithStandardOutput
         void apply() => filter.Apply(logEntries);
 
         // assert
-        Exception exception = Assert.Throws<Exception>(apply);
-        Assert.Equal("[Filter::Apply][ERROR] Filter key is not matching source fields!", exception.Message);
+        ArgumentException exception = Assert.Throws<ArgumentException>(apply);
+        Assert.Equal("[Filter::Apply] A filter key is not matching any source fields!", exception.Message);
     }
 }

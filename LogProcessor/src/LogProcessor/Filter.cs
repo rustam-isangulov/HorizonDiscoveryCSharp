@@ -23,17 +23,16 @@ public class Filter : ITransform
 
     public LogEntries Apply(LogEntries source)
     {
-        try
+        if (!_filters.Keys.All(source.Fields.Fields.Contains))
         {
-            var resultEntries = source.Entries.Where(
-                e => _filters.All(
-                    f => Regex.IsMatch(e[source.Fields[f.Key]], f.Value)));
+            throw new ArgumentException
+                ("[Filter::Apply] A filter key is not matching any source fields!");
+        }
 
-            return LogEntries.Of(source.Fields, resultEntries.ToList());
-        }
-        catch (KeyNotFoundException ex)
-        {
-            throw new Exception("[Filter::Apply][ERROR] Filter key is not matching source fields!", ex);
-        }
+        var resultEntries = source.Entries.Where(
+            e => _filters.All(
+                f => Regex.IsMatch(e[source.Fields[f.Key]], f.Value)));
+
+        return LogEntries.Of(source.Fields, resultEntries.ToList());
     }
 }
