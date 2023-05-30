@@ -10,10 +10,13 @@ namespace LogProcessor
     {
         private readonly Action<string> _appender;
         private readonly IFormatInfo _formatInfo;
-        private Processor(Action<string> appender, IFormatInfo formatInfo ) 
+        private readonly Queue<ITransform> _transforms;
+
+        private Processor(Action<string> appender, IFormatInfo formatInfo, Queue<ITransform> transforms)
         {
             _appender = appender;
             _formatInfo = formatInfo;
+            _transforms = new Queue<ITransform>(transforms);
         }
 
         public void Process(IList<FileInfo> files)
@@ -31,7 +34,14 @@ namespace LogProcessor
 
         private LogEntries Transform(LogEntries sourceEntries) 
         {
-            return sourceEntries;
+            LogEntries result = sourceEntries;
+
+            foreach (var transform in _transforms)
+            {
+                result = transform.Apply(result);
+            }
+
+            return result;
         }
 
         private LogEntries Extract(IList<FileInfo> files)
@@ -54,6 +64,7 @@ namespace LogProcessor
 
         public class Builder
         {
+            private Queue<ITransform> _transforms = new Queue<ITransform>();
             private Action<string> _appender = Console.WriteLine;
             private IFormatInfo? _format;
 
@@ -62,9 +73,27 @@ namespace LogProcessor
                 return new Builder();
             }
 
-            public Builder ForFormat(IFormatInfo formatInfo) 
+            public Builder ParseAs(IFormatInfo formatInfo) 
             {
                 _format = formatInfo;
+                return this;
+            }
+
+            public Builder ThenFilter(ITransform filter) 
+            { 
+                _transforms.Enqueue(filter);
+                return this;
+            }
+
+            public Builder ThenAggregator(ITransform aggregator) 
+            { 
+                _transforms.Enqueue(aggregator);
+                return this;
+            }
+
+            public Builder ThenSort(ITransform sorter) 
+            { 
+                _transforms.Enqueue(sorter);
                 return this;
             }
 
@@ -81,7 +110,7 @@ namespace LogProcessor
                     throw new InvalidOperationException("[Processor::Builder::Build] FormatInfo is null!");
                 }
 
-                return new Processor(_appender, _format);
+                return new Processor(_appender, _format, _transforms);
             }
         }
     }
