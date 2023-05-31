@@ -33,7 +33,7 @@ Host:
 git clone https://github.com/rustam-isangulov/HorizonDiscoveryCSharp.git
 ```
 
-#### 2 Change directoty to `HorizonDiscoveryCSharp\LogProcessor`
+#### 2 Change directoty to `HorizonDiscoveryCSharp/LogProcessor`
 
 ```shell
 cd ./HorizonDiscoveryCSharp/LogProcessor
@@ -157,7 +157,7 @@ Processed logs output:
 </details>
 
 ```shell
-./publish/LogProcessor.exe --files "../TestLogs/NCSALog.txt" "../TestLogs/NCSALog1.txt" --type "NCSA"
+./publish/LogProcessor --files "../TestLogs/NCSALog.txt" "../TestLogs/NCSALog1.txt" --type "NCSA"
 ```
 
 <details><summary>expected output</summary>
