@@ -27,19 +27,19 @@ Host:
 
 ### Steps
 
-#### 1 Clone this repository
+#### 1. Clone this repository
 
 ```shell
 git clone https://github.com/rustam-isangulov/HorizonDiscoveryCSharp.git
 ```
 
-#### 2 Change directoty to `HorizonDiscoveryCSharp/LogProcessor`
+#### 2. Change directoty to `HorizonDiscoveryCSharp/LogProcessor`
 
 ```shell
 cd ./HorizonDiscoveryCSharp/LogProcessor
 ```
 
-#### 3 *(optional)* Run unit tests
+#### 3. *(optional)* Run unit tests
 
 ```shell
 dotnet test -l:"console;verbosity=detailed"
@@ -129,12 +129,12 @@ Total tests: 26
 </p>
 </details>
 
-#### 4 Publish locally
+#### 4. Publish locally
 
 ```shell
 dotnet publish -o publish ./src/LogProcessor/
 ```
-#### 5 Run application
+#### 5. Run application
 
 ```shell
 ./publish/LogProcessor --files "../TestLogs/W3CLog.txt" "../TestLogs/W3CLog1.txt" --type "W3C"
