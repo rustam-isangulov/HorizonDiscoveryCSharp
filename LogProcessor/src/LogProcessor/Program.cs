@@ -68,7 +68,6 @@ public class Program
 
             Console.WriteLine("Processed logs output:");
             processor.Process(files);
-
         }
         catch (Exception ex)
         {

@@ -5,8 +5,12 @@ using LogProcessor;
 
 namespace LogProcessor.Tests;
 
-public class ProgramUnitTests
+public class ProgramUnitTests : TestWithStandardOutput
 {
+    public ProgramUnitTests(ITestOutputHelper output) : base(output)
+    {
+    }
+
     [Fact]
     public void EmptyArgumentsString()
     {
