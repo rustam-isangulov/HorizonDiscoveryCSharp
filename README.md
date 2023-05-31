@@ -6,7 +6,7 @@
 
 ## Run the application on example logs
 
-### Test environment
+### Test environments
 
 ```shell
 .NET SDK:
@@ -23,6 +23,24 @@ Host:
   Version:      7.0.5
   Architecture: x64
   Commit:       8042d61b17
+```
+
+```
+.NET SDK:
+Version:   7.0.302
+Commit:    990cf98a27
+
+Runtime Environment:
+OS Name:     Mac OS X
+OS Version:  13.3
+OS Platform: Darwin
+RID:         osx.13-x64
+
+Host:
+  Version:      7.0.5
+  Architecture: x64
+  Commit:       8042d61b17
+
 ```
 
 ### Steps
