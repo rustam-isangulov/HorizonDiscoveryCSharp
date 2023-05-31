@@ -20,6 +20,7 @@ public class Processors
                .WithFieldAggregator("date", "date", (prev, curr) => prev.CompareTo(curr) < 0 ? curr : prev)
                .WithFieldAggregator("time", "time", (prev, curr) => prev.CompareTo(curr) < 0 ? curr : prev)
                .Build())
+            .ThenSort(Sorter.Of("uri-counter", Sorter.IntComparer))
            .WithAppender(writer)
            .Build();
     }    
@@ -36,6 +37,7 @@ public class Processors
                .WithFieldAggregator("date_time", "date_time", (prev, curr) => prev.CompareTo(curr) < 0 ? curr : prev)
                .WithFieldAggregator("bytes_sent", "bytes_sent", (prev, curr) => prev.CompareTo(curr) < 0 ? curr : prev)
                .Build())
+           .ThenSort(Sorter.Of("uri-counter", Sorter.IntComparer))
            .WithAppender(writer)
            .Build();
     }

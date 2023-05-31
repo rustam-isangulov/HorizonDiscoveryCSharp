@@ -38,28 +38,29 @@ public class SorterUnitTests : TestWithStandardOutput
         Assert.Equal(new List<string> { "403", "e", "f" }, sortedEntries.Entries.Last());
     }
 
+
     [Fact]
-    public void SortingLogEntriesAscending()
+    public void SortingLogEntriesAscendingAsInts()
     {
         // arrange
         var logEntries = LogEntries.Of(
             LogFields.Of(new List<string> { "zero", "one", "two" }),
             new List<IList<string>> {
-                new List<string> { "a", "b", "c"},
-                new List<string> { "d", "e", "f" },
+                new List<string> { "41", "b", "c"},
+                new List<string> { "405", "e", "f" },
                 new List<string> { "404", "e", "g" },
                 new List<string> { "403", "e", "f" },
                 new List<string> { "504", "e", "f" }
             });
 
-        var sorter = Sorter.Of("zero", descending: false);
+        var sorter = Sorter.Of("zero", new CompareAsInts(), descending: false);
         
         // act
         var sortedEntries = sorter.Apply(logEntries);
 
         // assert
-        Assert.Equal(new List<string> { "403", "e", "f" }, sortedEntries.Entries[0]);
-        Assert.Equal(new List<string> { "d", "e", "f" }, sortedEntries.Entries.Last());
+        Assert.Equal(new List<string> { "41", "b", "c" }, sortedEntries.Entries[0]);
+        Assert.Equal(new List<string> { "504", "e", "f" }, sortedEntries.Entries[4]);
     }
 
     [Fact]
