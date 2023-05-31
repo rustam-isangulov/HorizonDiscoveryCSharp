@@ -18,7 +18,6 @@ public class Program
 
                 foreach (var arg in result.Tokens)
                 {
-                    Console.WriteLine(arg);
                     if (!File.Exists(arg.Value))
                     {
                         result.ErrorMessage = $"File \"{arg.Value}\" does not exist!";
@@ -32,7 +31,7 @@ public class Program
             })
         { IsRequired = true, AllowMultipleArgumentsPerToken = true };
 
-        var typeOption = new Option<SupportedFormats>
+        var typeOption = new Option<SupportedFormats> 
             (name: "--type", description: "Processor type")
         { IsRequired = true };
 
