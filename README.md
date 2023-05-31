@@ -216,3 +216,7 @@ Processed logs output:
 ```
 </p>
 </details>
+
+## UML Diagrams
+
+![Class Diagram](./CSharpTestUMLClasses.jpeg)
