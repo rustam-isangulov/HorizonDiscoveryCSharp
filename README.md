@@ -36,7 +36,7 @@ git clone https://github.com/rustam-isangulov/HorizonDiscoveryCSharp.git
 #### 2 Change directoty to `HorizonDiscoveryCSharp\LogProcessor`
 
 ```shell
-cd .\HorizonDiscoveryCSharp\LogProcessor
+cd ./HorizonDiscoveryCSharp/LogProcessor
 ```
 
 #### 3 *(optional)* Run unit tests
@@ -132,12 +132,12 @@ Total tests: 26
 #### 4 Publish locally
 
 ```shell
-dotnet publish -o publish .\src\LogProcessor\
+dotnet publish -o publish ./src/LogProcessor/
 ```
 #### 5 Run application
 
 ```shell
-.\publish\LogProcessor.exe --files "..\TestLogs\W3CLog.txt" "..\TestLogs\W3CLog1.txt" --type "W3C"
+./publish/LogProcessor --files "../TestLogs/W3CLog.txt" "../TestLogs/W3CLog1.txt" --type "W3C"
 ```
 
 <details><summary>expected output</summary>
@@ -157,7 +157,7 @@ Processed logs output:
 </details>
 
 ```shell
-.\publish\LogProcessor.exe --files "..\TestLogs\NCSALog.txt" "..\TestLogs\NCSALog1.txt" --type "NCSA"
+./publish/LogProcessor.exe --files "../TestLogs/NCSALog.txt" "../TestLogs/NCSALog1.txt" --type "NCSA"
 ```
 
 <details><summary>expected output</summary>
