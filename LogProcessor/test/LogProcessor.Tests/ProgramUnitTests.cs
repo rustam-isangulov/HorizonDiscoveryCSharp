@@ -24,18 +24,20 @@ public class ProgramUnitTests : TestWithStandardOutput
     [Fact]
     public void GoodArgumentsString()
     {
-        File.Create("test.txt").Close();
+        var tempFileName = Path.GetTempFileName();
+
+        File.Create(tempFileName).Close();
 
         var expected = 0;
 
         var actual = Program.Main(new string[]
         {
-            "--files", "test.txt",
-            "--type", "W3C"
+            "--files", tempFileName,
+            "--type", "NCSA"
         });
 
         Assert.Equal(expected, actual);
         
-        File.Delete("test.txt");
+        File.Delete(tempFileName);
     }
 }
