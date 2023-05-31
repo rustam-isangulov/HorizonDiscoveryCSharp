@@ -6,8 +6,13 @@
 
 ## Run the application on example logs
 
-### Test environments
+### Tested environments
+Command:
+```
+dotnet --info
+```
 
+#### Windows 10
 ```shell
 .NET SDK:
  Version:   7.0.203
@@ -25,6 +30,7 @@ Host:
   Commit:       8042d61b17
 ```
 
+#### MacOS
 ```
 .NET SDK:
 Version:   7.0.302
@@ -40,7 +46,24 @@ Host:
   Version:      7.0.5
   Architecture: x64
   Commit:       8042d61b17
+```
 
+#### Ubuntu
+```
+.NET SDK:
+ Version:   7.0.105
+ Commit:    e1bc5e001c
+
+Runtime Environment:
+ OS Name:     ubuntu
+ OS Version:  22.04
+ OS Platform: Linux
+ RID:         ubuntu.22.04-x64
+
+Host:
+  Version:      7.0.5
+  Architecture: x64
+  Commit:       8042d61b17
 ```
 
 ### Steps
