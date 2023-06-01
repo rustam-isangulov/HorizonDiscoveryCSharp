@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogProcessor
+namespace LogProcessor;
+
+public interface IFormatInfo
 {
-    public interface IFormatInfo
-    {
-        IList<string> Fields { get; }
-        Predicate<string> IsValidEntry { get; }
-        Func<string, IList<string>> Parser { get; }
-    }
+    IList<string> Fields { get; }
+    Predicate<string> IsValidEntry { get; }
+    Func<string, IList<string>> Parser { get; }
 }

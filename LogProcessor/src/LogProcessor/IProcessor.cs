@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogProcessor
+namespace LogProcessor;
+
+internal interface IProcessor
 {
-    internal interface IProcessor
-    {
-        void Process(IList<FileInfo> files);
-    }
+    void Process(IList<FileInfo> files);
 }

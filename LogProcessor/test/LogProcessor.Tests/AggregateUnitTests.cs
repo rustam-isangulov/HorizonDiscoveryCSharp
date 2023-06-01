@@ -7,7 +7,6 @@ using Xunit.Abstractions;
 
 namespace LogProcessor.Tests;
 
-
 public class AggregateUnitTests : TestWithStandardOutput
 {
     public AggregateUnitTests(ITestOutputHelper output) : base(output)
