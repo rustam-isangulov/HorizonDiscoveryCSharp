@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LogProcessor;
 
-internal interface IProcessor
+public interface IProcessor
 {
     void Process(IList<FileInfo> files);
 }

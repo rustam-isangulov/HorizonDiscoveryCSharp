@@ -8,7 +8,7 @@ namespace LogProcessor;
 
 public class Processors
 {
-    public static Processor GetW3CProcessor(IList<FileInfo> files, Action<string> writer)
+    public static IProcessor GetW3CProcessor(IList<FileInfo> files, Action<string> writer)
     {
         return Processor.Builder
            .Processor()
@@ -25,7 +25,7 @@ public class Processors
            .Build();
     }    
     
-    public static Processor GetNCSAProcessor(Action<string> writer)
+    public static IProcessor GetNCSAProcessor(Action<string> writer)
     {
         return Processor.Builder
            .Processor()
